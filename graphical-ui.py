@@ -70,3 +70,47 @@ nameText = StringVar()
 nameText.set("Name:")
 name = Label(window, textvariable=nameText)
 name.grid(row = 0, column = 6)
+
+nameInput = StringVar()
+nameIn = Entry(window, textvariable=nameInput, width = 32)
+nameIn.grid(row = 0, column = 7)
+
+onhold_window = Listbox(window, height = 12, width = 40, exportselection=False)
+onhold_window.grid(row = 2, column = 0, rowspan = 6, columnspan = 2, pady = (10, 0), padx = (5, 0))
+
+onhold_scrollbar = Scrollbar(window)
+onhold_scrollbar.grid(row = 2, column = 2, rowspan = 6, padx = (5, 5))
+onhold_scrollbar.configure(command = onhold_window.yview)
+onhold_window.configure(yscrollcommand = onhold_scrollbar.set)
+
+checkout_window = Listbox(window, height = 12, width = 40, exportselection=False)
+checkout_window.grid(row = 2, column = 3, rowspan = 6, columnspan = 2, pady = (10, 0))
+
+checkout_scrollbar = Scrollbar(window)
+checkout_scrollbar.grid(row = 2, column = 5, rowspan = 6, padx = (5, 5))
+checkout_scrollbar.configure(command = checkout_window.yview)
+checkout_window.configure(yscrollcommand = checkout_scrollbar.set)
+
+
+allbooks_window = Listbox(window, height = 12, width = 40, exportselection=False)
+allbooks_window.grid(row = 2, column = 6, rowspan = 6, columnspan = 2, pady = (10, 0))
+
+allbooks_scrollbar = Scrollbar(window)
+allbooks_scrollbar.grid(row = 2, column = 8, rowspan = 6, padx = (5, 5))
+allbooks_scrollbar.configure(command = allbooks_window.yview)
+allbooks_window.configure(yscrollcommand = allbooks_scrollbar.set)
+
+holdText = StringVar()
+holdText.set("On Hold")
+hold = Label(window, textvariable = holdText, width = 10)
+hold.grid(row = 8, column = 0, columnspan = 2)
+
+checkout_text = StringVar()
+checkout_text.set("Checked Out")
+checkout = Label(window, textvariable = checkout_text, width = 10)
+checkout.grid(row = 8, column = 3, columnspan = 2)
+
+all_text = StringVar()
+all_text.set("Main View")
+view = Label(window, textvariable = all_text, width = 10)
+view.grid(row = 8, column = 6, columnspan = 2)
