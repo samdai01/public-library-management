@@ -114,3 +114,45 @@ all_text = StringVar()
 all_text.set("Main View")
 view = Label(window, textvariable = all_text, width = 10)
 view.grid(row = 8, column = 6, columnspan = 2)
+
+viewAll = Button(window, text = "View All", command = view_command)
+viewAll.grid(row = 2, column = 9)
+viewAll.config(width = 12)
+
+searchEntry = Button(window, text = "Search Entry", command = search_command)
+searchEntry.grid(row = 3, column = 9)
+searchEntry.config(width = 12)
+
+addEntry = Button(window, text = "Add Entry", command = add_command)
+addEntry.grid(row = 4, column = 9)
+addEntry.config(width = 12)
+
+update = Button(window, text = "Update", command = update_command)
+update.grid(row = 5, column = 9)
+update.config(width = 12)
+
+delete = Button(window, text = "Delete", command = delete_command)
+delete.grid(row = 6, column = 9)
+delete.config(width = 12)
+
+close = Button(window, text = "Close", command = window.destroy)
+close.grid(row = 7, column = 9)
+close.config(width = 12)
+
+check_out = Button(window, text = "Check Out", command = check_out_command)
+check_out.grid(row = 2, column = 10)
+check_out.config(width = 12)
+
+check_in = Button(window, text = "Check In", command = check_in_command)
+check_in.grid(row = 3, column = 10)
+check_in.config(width = 12)
+
+place_hold = Button(window, text = "Place Hold", command = place_hold_command)
+place_hold.grid(row = 4, column = 10)
+place_hold.config(width = 12)
+
+allbooks_window.bind("<<ListboxSelect>>", get_selected_book)
+checkout_window.bind("<<ListboxSelect>>", get_selected_book)
+onhold_window.bind("<<ListboxSelect>>", get_selected_book)
+
+window.mainloop()
