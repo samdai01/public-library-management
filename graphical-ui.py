@@ -50,6 +50,77 @@ def add_command(database = 0, status = "Available"):
     view_command()
 
 
+"""
+Searches through all three tables and outputs the result into their respective windows. 
+"""
+def search_command():
+    # Clear windows.
+    allbooks_window.delete(0, END)
+    checkout_window.delete(0, END)
+    onhold_window.delete(0, END)
+    for book in database_queries.search_catalog(0, titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), nameInput.get()):
+        allbooks_window.insert(END, book)
+    
+    for checkedOut in database_queries.search_catalog(1, titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), nameInput.get()):
+        checkout_window.insert(END, checkedOut)
+        
+    for onHold in database_queries.search_catalog(2, titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), nameInput.get()):
+        onhold_window.insert(END, onHold)
+
+"""
+Fills in the relevant information in the text entry boxes at the top from a selected book in any of the windows.
+"""
+def get_selected_book(event):
+    global selected_books #     Tuple containing relevant book data in order of appearance in text window.
+    
+    if len(allbooks_window.curselection()) > 0:     # Selects from data in all_books window.
+        book_row = allbooks_window.curselection()[0]
+        selected_books = allbooks_window.get(book_row)
+        titleIn.delete(0, END)
+        titleIn.insert(END, selected_books[1])
+        yearIn.delete(0, END)
+        yearIn.insert(END, selected_books[3])
+        authorIn.delete(0, END)
+        authorIn.insert(END, selected_books[2])
+        isbnIn.delete(0, END)
+        isbnIn.insert(END, selected_books[4])
+        nameIn.delete(0, END)
+        nameIn.insert(END, selected_books[5])
+    elif len(checkout_window.curselection()) > 0:    # Selects from data in checked_out window.
+        book_row = checkout_window.curselection()[0]
+        selected_books = checkout_window.get(book_row)
+        titleIn.delete(0, END)
+        titleIn.insert(END, selected_books[1])
+        yearIn.delete(0, END)
+        yearIn.insert(END, selected_books[3])
+        authorIn.delete(0, END)
+        authorIn.insert(END, selected_books[2])
+        isbnIn.delete(0, END)
+        isbnIn.insert(END, selected_books[4])
+        nameIn.delete(0, END)
+        nameIn.insert(END, selected_books[5])
+    elif len(onhold_window.curselection()) > 0:     # Selects from data in on_hold window.
+        book_row = onhold_window.curselection()[0]
+        selected_books = onhold_window.get(book_row)
+        titleIn.delete(0, END)
+        titleIn.insert(END, selected_books[1])
+        yearIn.delete(0, END)
+        yearIn.insert(END, selected_books[3])
+        authorIn.delete(0, END)
+        authorIn.insert(END, selected_books[2])
+        isbnIn.delete(0, END)
+        isbnIn.insert(END, selected_books[4])
+        nameIn.delete(0, END)
+        nameIn.insert(END, selected_books[5])
+    else:
+        pass
+
+"""
+Updates the information for a selected novel depending on the database selected and status.
+"""
+def update_command(database = 0, status = "Available"):
+    database_queries.update_book(selected_books[0], titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, database)
+    view_command()
 
 window = Tk()
 
