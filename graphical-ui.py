@@ -121,6 +121,63 @@ Updates the information for a selected novel depending on the database selected 
 def update_command(database = 0, status = "Available"):
     database_queries.update_book(selected_books[0], titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, database)
     view_command()
+    
+    
+"""
+Deletes a novel from all tables by default, specific table possible. Deletes by ISBN number.
+"""
+def delete_command(database = -1):
+    if database == 0:
+        database_queries.delete_book(selected_books[4], 0)
+    elif database == 1:
+        database_queries.delete_book(selected_books[4], 1)
+    elif database == 2:
+        database_queries.delete_book(selected_books[4], 2)
+    elif database == -1:       
+        database_queries.delete_book(selected_books[4], 0)
+        database_queries.delete_book(selected_books[4], 1)
+        database_queries.delete_book(selected_books[4], 2)
+    view_command()
+
+"""
+Performs a checkout operation on an available or on hold novel.
+"""
+def check_out_command():
+    status = database_queries.search_catalog(0, isbn = selected_books[4])[0][5]
+    if status == 'Available':
+        newStatus = f"Checked out: {nameInput.get()}"
+        update_command(status = newStatus)
+        add_command(1, newStatus)
+        view_command()
+    elif "On Hold:" in status:
+        newStatus = f"Checked out: {status[9:]}"
+        update_command(status = newStatus)
+        add_command(1, newStatus)
+        delete_command(2)
+        view_command()   
+    else:
+        print("This novel is not available!")
+
+"""
+Performs a check in operation on a novel that is currently checked out, setting its status to 'Available'.
+"""
+def check_in_command():
+    update_command()
+    delete_command(1)
+
+"""
+Places a hold on an available book.
+"""
+def place_hold_command():
+    status = database_queries.search_catalog(0, isbn = selected_books[4])[0][5]     # Obtains the current status of a selected book.
+    
+    if status == 'Available':
+        newStatus = f"On Hold: {nameInput.get()}"
+        update_command(status = newStatus)
+        add_command(2, newStatus)
+        view_command()
+    else:
+        print("This novel is not available!")
 
 window = Tk()
 
