@@ -20,6 +20,36 @@ Updated project can be found at github.com/samdai01/library
 from tkinter import *
 import database_queries
 
+"""
+Command that views all books in collection with filtering. 
+"""
+def view_command():
+    allbooks_window.delete(0, END)
+    checkout_window.delete(0, END)
+    onhold_window.delete(0, END)
+    
+    for book in database_queries.view_all():
+        allbooks_window.insert(END, book)
+
+    for checkedOutBooks in database_queries.view_checkedOut():
+        checkout_window.insert(END, checkedOutBooks)
+    
+    for onholdBooks in database_queries.view_onHold():
+        onhold_window.insert(END, onholdBooks)
+
+"""
+Command that adds a new novel to the collection. 
+"""
+def add_command(database = 0, status = "Available"):
+    if database == 0:       # Add to all_books database.
+        database_queries.insert_book(titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, 0)
+    elif database == 1:     # Add to checked_out database. 
+        database_queries.insert_book(titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, 1)
+    elif database == 2:     # Add to on_hold database.
+        database_queries.insert_book(titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, 2)
+    view_command()
+
+
 
 window = Tk()
 
