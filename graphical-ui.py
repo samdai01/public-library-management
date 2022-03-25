@@ -49,7 +49,6 @@ def add_command(database = 0, status = "Available"):
         database_queries.insert_book(titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, 2)
     view_command()
 
-
 """
 Searches through all three tables and outputs the result into their respective windows. 
 """
@@ -121,8 +120,7 @@ Updates the information for a selected novel depending on the database selected 
 def update_command(database = 0, status = "Available"):
     database_queries.update_book(selected_books[0], titleInput.get(), authorInput.get(), yearInput.get(), isbnInput.get(), status, database)
     view_command()
-    
-    
+
 """
 Deletes a novel from all tables by default, specific table possible. Deletes by ISBN number.
 """
@@ -178,6 +176,11 @@ def place_hold_command():
         view_command()
     else:
         print("This novel is not available!")
+
+"""
+Front end UI design. Uses grid format.
+"""
+
 
 window = Tk()
 
